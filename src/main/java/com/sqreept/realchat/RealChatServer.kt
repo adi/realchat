@@ -12,4 +12,7 @@ fun runServer() {
         logger.warn { "Route / called" }
         ctx.result("Hello World!")
     }
+    app.post("/register") { ctx ->
+        ctx.result("{ \"error\": null }")
+    }
 }
