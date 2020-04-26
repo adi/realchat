@@ -1,15 +1,24 @@
 package com.sqreept.realchat
 
-import io.javalin.Javalin
-import mu.KotlinLogging
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.subcommands
 
-private val logger = KotlinLogging.logger {}
+class RealChatCommand: CliktCommand(name = "realchat") {
+    override fun run() = Unit
+}
 
-fun main() {
-    logger.debug { "Starting server..." }
-    val app = Javalin.create().start(3000)
-    app.get("/") { ctx ->
-        logger.warn { "Route / called" }
-        ctx.result("Hello World!")
+class Client: CliktCommand(help="Run the RealChat client") {
+    override fun run() {
+        runClient()
     }
 }
+
+class Server: CliktCommand(help="Run the RealChat server") {
+    override fun run() {
+        runServer()
+    }
+}
+
+fun main(args: Array<String>) = RealChatCommand()
+    .subcommands(Client(), Server())
+    .main(args)
